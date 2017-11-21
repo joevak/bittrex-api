@@ -17,7 +17,7 @@ import (
 
 const (
 	apiKey    = "API_KEY"
-	apiSecret    = "API_SECRET"
+	apiSecret = "API_SECRET"
 )
 
 func main() {
