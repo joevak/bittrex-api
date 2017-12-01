@@ -122,7 +122,7 @@ func (b *Bittrex) GetTicker(market string) (JSONTicker, error) {
 //Retrives last 24 hour summary of defined markets.  If no markets are passed retrives summaries for all markets
 func (b *Bittrex) GetMarketSummary(markets ...string) ([]JSONMarketSummary, error) {
 
-	jsonMarketSummaries := make([]JSONMarketSummary, len(markets))
+	var jsonMarketSummaries []JSONMarketSummary
 	var err error = nil
 	if len(markets) > 0 {
 		c := make(chan []JSONMarketSummary, len(markets))

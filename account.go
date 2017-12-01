@@ -96,7 +96,7 @@ func (b *Bittrex) GetBalance(currencies ...string) ([]JSONBalance, error) {
 
 		for i := 0; i < len(currencies); i++ {
 			res := <-c
-			jsonBalances = append(jsonBalances, res)
+			jsonBalances[i] = res
 		}
 	} else {
 		endPoint := "account/getbalances?apikey=" + string(b.Key)
@@ -156,7 +156,9 @@ func (b *Bittrex) GetOrder(UUID string) (JSONOrderUUID, error) {
 //Retrives order history for defined markets, if no markets are defined retrives for all markets
 func (b *Bittrex) GetOrderHistory(markets ...string) ([]JSONOrderHistory, error) {
 
-	jsonOrderHistories := make([]JSONOrderHistory, len(markets))
+	//jsonOrderHistories := make([]JSONOrderHistory, len(markets))
+	var jsonOrderHistories []JSONOrderHistory
+
 	var err error = nil
 	if len(markets) > 0 {
 		c := make(chan []JSONOrderHistory, len(markets))
@@ -188,7 +190,7 @@ func (b *Bittrex) GetOrderHistory(markets ...string) ([]JSONOrderHistory, error)
 //Retrives withdrawl history for defined currencies, if no currencies are defined retrives for all currencies
 func (b *Bittrex) GetWithdrawHistory(currencies ...string) ([]JSONAccountHistory, error) {
 
-	jsonAccountHistories := make([]JSONAccountHistory, len(currencies))
+	var jsonAccountHistories []JSONAccountHistory
 	var err error = nil
 	if len(currencies) > 0 {
 		c := make(chan []JSONAccountHistory, len(currencies))
@@ -204,7 +206,6 @@ func (b *Bittrex) GetWithdrawHistory(currencies ...string) ([]JSONAccountHistory
 		}
 		for i := 0; i < len(currencies); i++ {
 			res := <-c
-
 			jsonAccountHistories = append(jsonAccountHistories, res...)
 		}
 	} else {
@@ -221,7 +222,7 @@ func (b *Bittrex) GetWithdrawHistory(currencies ...string) ([]JSONAccountHistory
 //Retrives deposit history for defined currencies, if no currencies are defined retrives for all currencies
 func (b *Bittrex) GetDepositHistory(currencies ...string) ([]JSONAccountHistory, error) {
 
-	jsonAccountHistories := make([]JSONAccountHistory, len(currencies))
+	var jsonAccountHistories []JSONAccountHistory
 	var err error = nil
 	if len(currencies) > 0 {
 		c := make(chan []JSONAccountHistory, len(currencies))
